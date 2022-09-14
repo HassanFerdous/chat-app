@@ -1,3 +1,4 @@
+import { current } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 import { apiSlice } from '../api/apiSlice';
 
@@ -5,7 +6,8 @@ export const messagesApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getMessages: builder.query({
 			query: (id) =>
-				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
+				// `/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
+				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=20`,
 			transformResponse: (response, meta) => {
 				let totalMessages = meta.response.headers.get('X-Total-Count');
 				return {
@@ -31,15 +33,26 @@ export const messagesApi = apiSlice.injectEndpoints({
 							draft.messages.push(message);
 						});
 					});
-				} catch (error) {
-					await cacheEntryRemoved;
-				}
+				} catch (error) {}
+				await cacheEntryRemoved;
+				socket.close();
 			},
 		}),
 
 		getMoreMessages: builder.query({
 			query: ({ id, page }) =>
 				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=${page}&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
+			async onQueryStarted({ id, page }, { queryFulfilled, dispatch }) {
+				try {
+					let { data: previousMessages } = await queryFulfilled;
+					dispatch(
+						apiSlice.util.updateQueryData('getMessages', id, (draft) => {
+							draft.messages = [...draft.messages, ...previousMessages];
+							draft.totalMessages = draft.messages.length;
+						})
+					);
+				} catch (error) {}
+			},
 		}),
 		addMessage: builder.mutation({
 			query: (data) => ({
