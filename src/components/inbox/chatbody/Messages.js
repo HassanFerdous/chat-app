@@ -22,7 +22,7 @@ export default function Messages({ conversationId: id }) {
 
 	const { data } = useGetMessagesQuery(id);
 	const { messages, totalMessages } = data || {};
-	console.log(messages);
+
 	useEffect(() => {
 		if (page > 1) {
 			dispatch(messagesApi.endpoints.getMoreMessages.initiate({ id: id, page }));

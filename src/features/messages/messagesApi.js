@@ -40,13 +40,13 @@ export const messagesApi = apiSlice.injectEndpoints({
 		}),
 
 		getMoreMessages: builder.query({
-			query: ({ id, page }) =>
-				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=${page}&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
+			query: ({ id, page }) => `/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=${page}&_limit=20`,
 			async onQueryStarted({ id, page }, { queryFulfilled, dispatch }) {
 				try {
 					let { data: previousMessages } = await queryFulfilled;
 					dispatch(
 						apiSlice.util.updateQueryData('getMessages', id, (draft) => {
+							console.log(`next: ${previousMessages.map((m) => m.id)}`);
 							draft.messages = [...draft.messages, ...previousMessages];
 							draft.totalMessages = draft.messages.length;
 						})
