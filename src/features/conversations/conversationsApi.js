@@ -31,6 +31,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
 					socket.on('conversation', ({ data, type }) => {
 						updateCachedData((draft) => {
 							if (type === 'update') {
+								// eslint-disable-next-line eqeqeq
 								const conversation = draft.data.find((c) => c.id == data?.id);
 								if (conversation?.id) {
 									conversation.message = data?.message;
@@ -116,6 +117,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
 				// optimistic cache update start
 				const pathResult = dispatch(
 					apiSlice.util.updateQueryData('getConversations', arg.sender, (draft) => {
+						// eslint-disable-next-line eqeqeq
 						const draftConversation = draft.data.find((c) => c.id == arg.id);
 						draftConversation.message = arg.data.message;
 						draftConversation.timestamp = arg.data.timestamp;
