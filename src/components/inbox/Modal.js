@@ -37,7 +37,6 @@ export default function Modal({ open, control }) {
 			)
 				.unwrap()
 				.then((data) => {
-					console.log(data);
 					setConversation(data);
 				})
 				.catch((err) => {

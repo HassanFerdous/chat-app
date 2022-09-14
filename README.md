@@ -31,3 +31,5 @@
 7. list conversation
 8. list messages by conversation id
 9. send message (insert messages into messages table)
+
+//please reload after window resize

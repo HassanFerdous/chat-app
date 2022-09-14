@@ -6,7 +6,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 		getMessages: builder.query({
 			query: (id) =>
 				// `/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
-				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=20`,
+				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
 			transformResponse: (response, meta) => {
 				let totalMessages = meta.response.headers.get('X-Total-Count');
 				return {
@@ -15,7 +15,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 				};
 			},
 			async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
-				const socket = io('http://localhost:9000', {
+				const socket = io(process.env.REACT_APP_API_URL, {
 					reconnectionDelay: 1000,
 					reconnection: true,
 					reconnectionAttemps: 10,
@@ -39,7 +39,8 @@ export const messagesApi = apiSlice.injectEndpoints({
 		}),
 
 		getMoreMessages: builder.query({
-			query: ({ id, page }) => `/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=${page}&_limit=20`,
+			query: ({ id, page }) =>
+				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=${page}&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
 			async onQueryStarted({ id, page }, { queryFulfilled, dispatch }) {
 				try {
 					let { data: previousMessages } = await queryFulfilled;
