@@ -1,4 +1,3 @@
-import { current } from '@reduxjs/toolkit';
 import io from 'socket.io-client';
 import { apiSlice } from '../api/apiSlice';
 import { messagesApi } from '../messages/messagesApi';
