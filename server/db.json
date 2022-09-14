@@ -1,0 +1,149 @@
+{
+  "users": [
+    {
+      "email": "sumit@learnwithsumit.com",
+      "password": "$2a$10$tGMlJhQmAnx7f4cIVY55FOtIRV91wjRwBhdpaANPoslku3P/aAjPK",
+      "name": "Sumit Saha",
+      "id": 1
+    },
+    {
+      "email": "akash@learnwithsumit.com",
+      "password": "$2a$10$Oc6jXnK6/pbSqmkngo/b.OhsU3JRf4OU1h9QwIoqz8ZUpG/hgHq72",
+      "name": "Akash Ahmed",
+      "id": 2
+    },
+    {
+      "email": "saad@learnwithsumit.com",
+      "password": "$2a$10$DVGOgchZrtvb1w6Pj.B0D.DXmHmoTsdy3oXfwF.02kE/pzJ7jyHqy",
+      "name": "Saad Hasan",
+      "id": 3
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "$2a$10$msgBYQ4pvgoErW.mq3Py3.Y9nN8XfTaS75Qn3BA61eL.4575Rqfxy",
+      "name": "This is test 1",
+      "id": 4
+    },
+    {
+      "email": "hello@gmail.com",
+      "password": "$2a$10$G7rBZrllihyvfTTWRPE0YO3mSuOOUokvJziXXxImcNF2wKcknHJda",
+      "name": "hello",
+      "id": 5
+    },
+    {
+      "email": "test1@gmail.com",
+      "password": "$2a$10$G7rBZrllihyvfTTWRPE0YO3mSuOOUokvJziXXxImcNF2wKcknHJda",
+      "name": "Iam test-1",
+      "id": 6
+    }
+  ],
+  "conversations": [
+    {
+      "participants": "sumit@learnwithsumit.com-saad@learnwithsumit.com",
+      "users": [
+        {
+          "email": "sumit@learnwithsumit.com",
+          "name": "Sumit Saha",
+          "id": 1
+        },
+        {
+          "email": "saad@learnwithsumit.com",
+          "password": "$2a$10$DVGOgchZrtvb1w6Pj.B0D.DXmHmoTsdy3oXfwF.02kE/pzJ7jyHqy",
+          "name": "Saad Hasan",
+          "id": 3
+        }
+      ],
+      "message": "Hoi",
+      "timestamp": 1662704970215,
+      "id": 1
+    },
+    {
+      "participants": "hello@gmail.com-test1@gmail.com",
+      "users": [
+        {
+          "email": "hello@gmail.com",
+          "name": "hello",
+          "id": 5
+        },
+        {
+          "email": "test1@gmail.com",
+          "password": "$2a$10$G7rBZrllihyvfTTWRPE0YO3mSuOOUokvJziXXxImcNF2wKcknHJda",
+          "name": "Iam test-1",
+          "id": 6
+        }
+      ],
+      "message": "nice to meet you too",
+      "timestamp": 1663159704741,
+      "id": 2
+    }
+  ],
+  "messages": [
+    {
+      "conversationId": 1,
+      "sender": {
+        "email": "sumit@learnwithsumit.com",
+        "name": "Sumit Saha",
+        "id": 1
+      },
+      "receiver": {
+        "email": "saad@learnwithsumit.com",
+        "password": "$2a$10$DVGOgchZrtvb1w6Pj.B0D.DXmHmoTsdy3oXfwF.02kE/pzJ7jyHqy",
+        "name": "Saad Hasan",
+        "id": 3
+      },
+      "message": "Hello",
+      "timestamp": 1662628206226,
+      "id": 1
+    },
+    {
+      "conversationId": 2,
+      "sender": {
+        "email": "hello@gmail.com",
+        "name": "hello",
+        "id": 5
+      },
+      "receiver": {
+        "email": "test1@gmail.com",
+        "password": "$2a$10$G7rBZrllihyvfTTWRPE0YO3mSuOOUokvJziXXxImcNF2wKcknHJda",
+        "name": "Iam test-1",
+        "id": 6
+      },
+      "message": "hello test 1",
+      "timestamp": 1663159633677,
+      "id": 2
+    },
+    {
+      "conversationId": 2,
+      "sender": {
+        "email": "test1@gmail.com",
+        "name": "Iam test-1",
+        "id": 6
+      },
+      "receiver": {
+        "email": "hello@gmail.com",
+        "name": "hello",
+        "id": 5
+      },
+      "message": "Hi nice to meet you hello",
+      "timestamp": 1663159674434,
+      "id": 3
+    },
+    {
+      "conversationId": 2,
+      "sender": {
+        "email": "hello@gmail.com",
+        "name": "hello",
+        "id": 5
+      },
+      "receiver": {
+        "email": "test1@gmail.com",
+        "password": "$2a$10$G7rBZrllihyvfTTWRPE0YO3mSuOOUokvJziXXxImcNF2wKcknHJda",
+        "name": "Iam test-1",
+        "id": 6
+      },
+      "message": "nice to meet you too",
+      "timestamp": 1663159704741,
+      "id": 4
+    }
+  ]
+}
