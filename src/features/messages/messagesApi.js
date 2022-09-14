@@ -1,4 +1,3 @@
-import { current } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 import { apiSlice } from '../api/apiSlice';
 
@@ -46,7 +45,6 @@ export const messagesApi = apiSlice.injectEndpoints({
 					let { data: previousMessages } = await queryFulfilled;
 					dispatch(
 						apiSlice.util.updateQueryData('getMessages', id, (draft) => {
-							console.log(`next: ${previousMessages.map((m) => m.id)}`);
 							draft.messages = [...draft.messages, ...previousMessages];
 							draft.totalMessages = draft.messages.length;
 						})

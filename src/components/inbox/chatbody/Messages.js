@@ -17,10 +17,9 @@ export default function Messages({ conversationId: id }) {
 	const { email } = user || {};
 	const [page, setPage] = useState(1);
 	const containerRef = useRef(null);
-	const [hasMore, setHasMore] = useState(true);
 	const dispatch = useDispatch();
-
-	const { data } = useGetMessagesQuery(id);
+	const [totalPages, setTotalPages] = useState(1);
+	const { data, isSuccess } = useGetMessagesQuery(id);
 	const { messages, totalMessages } = data || {};
 
 	useEffect(() => {
@@ -30,27 +29,26 @@ export default function Messages({ conversationId: id }) {
 	}, [page, dispatch, id]);
 
 	useEffect(() => {
-		if (totalMessages > 0) {
-			const more = Math.ceil(totalMessages / Number(process.env.REACT_APP_CONVERSATIONS_PER_PAGE)) > page;
-			setHasMore(more);
+		if (isSuccess) {
+			setTotalPages(Math.ceil(totalMessages / 20));
 		}
-	}, [totalMessages, page]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isSuccess]);
 
 	//create reverse infinite scroll
 	const handleScroll = (e) => {
 		let self = e.target;
-		let parentHeight = self.clientHeight + 48;
 		let scrollTop = Math.abs(self.scrollTop);
-
-		if (parentHeight - scrollTop <= 0) {
-			if (!hasMore) return;
+		let scrollBottom = self.scrollHeight - self.scrollTop - self.clientHeight;
+		if (scrollBottom - scrollTop * 2 <= 0) {
+			if (page >= totalPages) return;
 			setPage((prevPage) => prevPage + 1);
 		}
 	};
 
 	return (
 		<div
-			className='relative w-full  p-6 pr-0 h-[calc(100vh_-_129px)] overflow-y-auto flex flex-col-reverse'
+			className='relative w-full  p-6  h-[calc(92vh_-_129px)] overflow-y-auto flex flex-col-reverse'
 			onScroll={debounce(handleScroll, 300)}>
 			<div className='space-y-2' ref={containerRef}>
 				{messages

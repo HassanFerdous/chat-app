@@ -89,12 +89,6 @@ export const conversationsApi = apiSlice.injectEndpoints({
 					const senderUser = users.find((user) => user.email === arg.sender);
 					const receiverUser = users.find((user) => user.email !== arg.sender);
 
-					// dispatch(
-					// 	conversationsApi.util.updateQueryData('getConversations', senderUser.email, (draft) => {
-					// 		draft.data.unshift(conversation.data);
-					// 	})
-					// );
-
 					dispatch(
 						messagesApi.endpoints.addMessage.initiate({
 							conversationId: conversation?.data?.id,
