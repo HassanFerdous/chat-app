@@ -47,7 +47,6 @@ export const messagesApi = apiSlice.injectEndpoints({
 					dispatch(
 						apiSlice.util.updateQueryData('getMessages', id, (draft) => {
 							draft.messages = [...draft.messages, ...previousMessages];
-							draft.totalMessages = draft.messages.length;
 						})
 					);
 				} catch (error) {}
