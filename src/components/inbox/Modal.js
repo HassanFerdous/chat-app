@@ -28,12 +28,15 @@ export default function Modal({ open, control }) {
 
 	useEffect(() => {
 		if (participant?.length > 0 && participant[0].email !== myEmail) {
-			// check conversation existance
+			// check conversation exist
 			dispatch(
-				conversationsApi.endpoints.getConversation.initiate({
-					userEmail: myEmail,
-					participantEmail: to,
-				})
+				conversationsApi.endpoints.getConversation.initiate(
+					{
+						userEmail: myEmail,
+						participantEmail: to,
+					},
+					{ forceRefetch: true }
+				)
 			)
 				.unwrap()
 				.then((data) => {
@@ -64,6 +67,7 @@ export default function Modal({ open, control }) {
 	};
 
 	const doSearch = (value) => {
+		if (!value.trim().length) return;
 		if (isValidEmail(value)) {
 			// check user API
 			setUserCheck(true);
@@ -100,6 +104,9 @@ export default function Modal({ open, control }) {
 				},
 			});
 		}
+
+		setTo('');
+		setMessage('');
 	};
 
 	return (
@@ -152,7 +159,9 @@ export default function Modal({ open, control }) {
 							</button>
 						</div>
 
-						{participant?.length === 0 && <Error message='This user does not exist!' />}
+						{participant?.length === 0 && to?.trim()?.length ? (
+							<Error message='This user does not exist!' />
+						) : null}
 						{participant?.length > 0 && participant[0].email === myEmail && (
 							<Error message='You can not send message to yourself!' />
 						)}
