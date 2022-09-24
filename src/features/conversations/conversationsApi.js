@@ -31,14 +31,16 @@ export const conversationsApi = apiSlice.injectEndpoints({
 					socket.on('conversation', ({ data, type }) => {
 						updateCachedData((draft) => {
 							if (type === 'update') {
-								// eslint-disable-next-line eqeqeq
-								const conversation = draft.data.find((c) => c.id == data?.id);
-								if (conversation?.id) {
-									conversation.message = data?.message;
-									conversation.timestamp = data?.timestamp;
-								}
-
-								return;
+								// return draft.data.sort((a, b) => b.timestamp - a.timestamp);
+								return {
+									...draft,
+									data: draft.data
+										.map((c) =>
+											// eslint-disable-next-line eqeqeq
+											c.id == arg.id ? { ...c, message: arg.data.message, timestamp: arg.data.timestamp } : c
+										)
+										.sort((a, b) => b.timestamp - a.timestamp),
+								};
 							}
 							draft.data.unshift(data);
 						});
@@ -111,10 +113,15 @@ export const conversationsApi = apiSlice.injectEndpoints({
 				// optimistic cache update start
 				const pathResult = dispatch(
 					apiSlice.util.updateQueryData('getConversations', arg.sender, (draft) => {
-						// eslint-disable-next-line eqeqeq
-						const draftConversation = draft.data.find((c) => c.id == arg.id);
-						draftConversation.message = arg.data.message;
-						draftConversation.timestamp = arg.data.timestamp;
+						return {
+							...draft,
+							data: draft.data
+								.map((c) =>
+									// eslint-disable-next-line eqeqeq
+									c.id == arg.id ? { ...c, message: arg.data.message, timestamp: arg.data.timestamp } : c
+								)
+								.sort((a, b) => b.timestamp - a.timestamp),
+						};
 					})
 				);
 				// optimistic cache update end
