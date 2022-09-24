@@ -27,6 +27,7 @@ router.render = (req, res) => {
 	if (path.includes('/messages') && method === 'POST') {
 		io.emit('message', {
 			message: res.locals.data,
+			conversationId: res.locals.data.conversationId,
 		});
 	}
 

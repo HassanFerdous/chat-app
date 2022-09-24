@@ -7,11 +7,12 @@ export const messagesApi = apiSlice.injectEndpoints({
 			query: (id) =>
 				// `/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
 				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
-			transformResponse: (response, meta) => {
+			transformResponse: (response, meta, arg) => {
 				let totalMessages = meta.response.headers.get('X-Total-Count');
 				return {
 					messages: response,
 					totalMessages,
+					conversationId: arg,
 				};
 			},
 			async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
@@ -27,9 +28,12 @@ export const messagesApi = apiSlice.injectEndpoints({
 
 				try {
 					await cacheDataLoaded;
-					socket.on('message', ({ message }) => {
+					socket.on('message', ({ message, conversationId }) => {
 						updateCachedData((draft) => {
-							draft.messages.push(message);
+							// eslint-disable-next-line eqeqeq
+							if (draft.conversationId == conversationId) {
+								draft.messages.push(message);
+							}
 						});
 					});
 				} catch (error) {}
